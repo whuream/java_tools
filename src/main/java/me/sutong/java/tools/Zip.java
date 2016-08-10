@@ -15,9 +15,6 @@ import java.util.stream.StreamSupport;
 public class Zip {
     public static <T, U, R> Stream<R> zip(final Stream<? extends T> streamT, final Stream<? extends U> streamU,
         final BiFunction<? super T, ? super U, ? extends R> biFunction) {
-        Objects.requireNonNull(biFunction);
-        Objects.requireNonNull(streamT);
-        Objects.requireNonNull(streamU);
 
         Spliterator<? extends T> spliteratorT = streamT.spliterator();
         Spliterator<? extends U> spliteratorU = streamU.spliterator();

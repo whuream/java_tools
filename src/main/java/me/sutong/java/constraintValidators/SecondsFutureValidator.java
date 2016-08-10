@@ -21,7 +21,8 @@ public class SecondsFutureValidator implements ConstraintValidator<SecondsFuture
             return true;
         }
 
-        return Long.valueOf(value.toString()).compareTo(
-                context.unwrap(HibernateConstraintValidatorContext.class).getTimeProvider().getCurrentTime()) == 1;
+        return Long.valueOf(value.toString())
+            .compareTo(context.unwrap(HibernateConstraintValidatorContext.class).getTimeProvider().getCurrentTime())
+            == 1;
     }
 }
