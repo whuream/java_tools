@@ -14,7 +14,7 @@ public class Merge {
         final Function<? super T, ? extends K> keyMapperT, final Function<? super T, ? extends V> valueMapperT,
         final Function<? super R, ? extends K> keyMapperR, final BiConsumer<? super R, ? super V> consumerR) {
 
-        Map<K, V> map = t.collect(Collectors.toMap(keyMapperT, valueMapperT));
+        Map<K, V> map = t.collect(Collectors.toMap(keyMapperT, valueMapperT, (a, b) -> b));
 
         r.forEach(item -> consumerR.accept(item, map.get(keyMapperR.apply(item))));
     }
