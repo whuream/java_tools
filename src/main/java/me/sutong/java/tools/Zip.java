@@ -1,6 +1,8 @@
 package me.sutong.java.tools;
 
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import java.util.Iterator;
 import java.util.Spliterator;
 import java.util.Spliterators;
@@ -44,5 +46,9 @@ public class Zip {
         return (streamT.isParallel() || streamU.isParallel()) ?
             StreamSupport.stream(split, true) :
             StreamSupport.stream(split, false);
+    }
+
+    public static <L, R> BiFunction<L, R, Pair<L, R>> toPair() {
+        return Pair::of;
     }
 }
