@@ -1,6 +1,7 @@
 package me.sutong.java;
 
 import com.alibaba.fastjson.JSON;
+import me.sutong.java.constraintValidators.Validator;
 import me.sutong.java.constraints.ElementMax;
 import me.sutong.java.constraints.ElementMin;
 import me.sutong.java.constraints.ElementNotNull;
@@ -84,21 +85,11 @@ public class ConstraintsTest {
         }
     }
 
-    public static String validate(Object object) {
-        Set<ConstraintViolation<Object>> result =
-            Validation.buildDefaultValidatorFactory().getValidator().validate(object);
-
-        return result.stream().map(t -> String
-            .format("field %s value %s illegal: %s", t.getPropertyPath().toString(), JSON.toJSON(t.getInvalidValue()),
-                t.getMessage())).collect(Collectors.joining("\n"));
-
-    }
-
     @Test
     public void test() {
         Students students = new Students(Arrays.asList(1l, 2l, -1l), Arrays.asList("", "SuTong", null), 100l,
             Arrays.asList(1l, 2l, 3l, null), Arrays.asList(1l, null, null));
 
-        System.out.println(validate(students));
+        Validator.validate(students, t -> System.out.printf(t));
     }
 }
