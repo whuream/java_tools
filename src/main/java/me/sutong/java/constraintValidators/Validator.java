@@ -13,13 +13,15 @@ import java.util.stream.Collectors;
  */
 public class Validator {
 
-    public static void validate(Object object, Consumer<? super String> consumer) {
+    public static void validate(Object object, Consumer<? super String> errMsgConsumer) {
         Set<ConstraintViolation<Object>> result =
             Validation.buildDefaultValidatorFactory().getValidator().validate(object);
-
-        consumer.accept(result.stream().map(t -> String
+        String errMsg = result.stream().map(t -> String
             .format("field %s value %s illegal: %s", t.getPropertyPath().toString(), JSON.toJSON(t.getInvalidValue()),
-                t.getMessage())).collect(Collectors.joining("\n")));
+                t.getMessage())).collect(Collectors.joining("\n"));
+        if (errMsg.length() > 0) {
+            errMsgConsumer.accept(errMsg);
+        }
 
     }
 }
